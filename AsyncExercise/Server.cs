@@ -4,6 +4,7 @@ namespace AsyncExercise
     public class Server
     {
 
+        /* Return [amount] random numbers between [min] and [max] inclusive */
         public int[] GetNumbers(int amount, int min, int max)
         {
             int[] res = new int[amount];
