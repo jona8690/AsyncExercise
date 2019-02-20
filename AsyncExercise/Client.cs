@@ -23,7 +23,7 @@ namespace AsyncExercise
 					return;
 				}
 
-                int[] numbers = mServer.GetNumbers(number, 1, 6);
+                int[] numbers = mServer.GetNumbersAsync(number, 1, 6).Result;
 
                 Console.WriteLine("Here are the numbers from the server: ");
 

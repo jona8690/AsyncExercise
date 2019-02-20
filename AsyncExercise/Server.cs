@@ -6,9 +6,17 @@ namespace AsyncExercise
     public class Server
     {
 
-        /* Return [amount] random numbers between [min] and [max] inclusive */
-        public Task<int[]> GetNumbers(int amount, int min, int max)
+
+
+		/* Return [amount] random numbers between [min] and [max] inclusive */
+		public Task<int[]> GetNumbersAsync(int amount, int min, int max)
+		{
+			return Task.Run(() => GetNumbers(amount, min, max));
+		}
+
+		private int[] GetNumbers(int amount, int min, int max)
         {
+			
             int[] res = new int[amount];
             Random r = new Random();
             int count = 0;
