@@ -18,12 +18,29 @@ namespace AsyncExercise {
 			while (Running) {
 				var key = Console.ReadKey();
 				KeyHist.Add(key);
+
+				var konami = new Queue<ConsoleKey>();
+				konami.Enqueue(ConsoleKey.UpArrow);
+				konami.Enqueue(ConsoleKey.UpArrow);
+				konami.Enqueue(ConsoleKey.DownArrow);
+				konami.Enqueue(ConsoleKey.DownArrow);
+				konami.Enqueue(ConsoleKey.LeftArrow);
+				konami.Enqueue(ConsoleKey.RightArrow);
+				konami.Enqueue(ConsoleKey.LeftArrow);
+				konami.Enqueue(ConsoleKey.RightArrow);
+				konami.Enqueue(ConsoleKey.B);
+				konami.Enqueue(ConsoleKey.A);
+
+				foreach (var k in KeyHist.GetQueue()) {
+					var nextKey = konami.Dequeue();
+					if (!(nextKey == k.Key)) return;
+				}
 			}
 		}
 
 		public void run() {
 
-			new Thread(Konami).Start();
+			//new Thread(Konami).Start();
 
 			while (Running) {
 				var number = AskForNumbers();

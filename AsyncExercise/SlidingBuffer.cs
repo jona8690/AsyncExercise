@@ -27,5 +27,8 @@ namespace AsyncExercise {
 			return GetEnumerator();
 		}
 
+		public Queue<T> GetQueue() {
+			return new Queue<T>(_queue);
+		}
 	}
 }
