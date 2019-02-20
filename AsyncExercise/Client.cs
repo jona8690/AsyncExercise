@@ -4,6 +4,7 @@ namespace AsyncExercise
     public class Client
     {
         private readonly Server mServer;
+		private bool Running = true;
 
         public Client(Server server)
         {
@@ -12,9 +13,15 @@ namespace AsyncExercise
 
         public void run()
         {
-            while (true)
+            while (Running)
             {
                 int number = GetNumber("Enter a number (0 for stop): ");
+
+				if(number == 0)
+				{
+					Running = false;
+					return;
+				}
 
                 int[] numbers = mServer.GetNumbers(number, 1, 6);
 
