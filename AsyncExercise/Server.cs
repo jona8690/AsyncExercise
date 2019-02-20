@@ -7,7 +7,7 @@ namespace AsyncExercise
     {
 
         /* Return [amount] random numbers between [min] and [max] inclusive */
-        public async Task<int[]> GetNumbers(int amount, int min, int max)
+        public Task<int[]> GetNumbers(int amount, int min, int max)
         {
             int[] res = new int[amount];
             Random r = new Random();
