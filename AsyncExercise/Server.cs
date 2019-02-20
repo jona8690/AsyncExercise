@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AsyncExercise
@@ -16,7 +17,7 @@ namespace AsyncExercise
 
 		private int[] GetNumbers(int amount, int min, int max)
         {
-			
+			Thread.Sleep(2500);
             int[] res = new int[amount];
             Random r = new Random();
             int count = 0;

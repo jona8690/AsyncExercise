@@ -1,45 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace AsyncExercise
 {
-    public class Client
-    {
-        private readonly Server mServer;
+	public class Client
+	{
+		private readonly Server mServer;
 		private bool Running = true;
 
-        public Client(Server server)
-        {
-            mServer = server;
-        }
+		public Client(Server server)
+		{
+			mServer = server;
+		}
 
-        public void run()
-        {
-            while (Running)
-            {
-                int number = GetNumber("Enter a number (0 for stop): ");
+		public void run()
+		{
+			while (Running)
+			{
+				var number = AskForNumbers();
+				if (number == 0) return;
 
-				if(number == 0)
-				{
-					Running = false;
-					return;
-				}
+				this.GetNumbers(number, 1, 6, WriteNumbers);
+			}
+		}
 
-                int[] numbers = mServer.GetNumbersAsync(number, 1, 6).Result;
+		public int AskForNumbers()
+		{
+			int number;
+			try
+			{
+				number = GetNumber("Enter a number (0 for stop): ");
+			} catch(System.FormatException)
+			{
+				Console.WriteLine("Invalid Number enterd.");
+				return AskForNumbers();
+			}catch(OverflowException)
+			{
+				Console.WriteLine("Easy there tiger... Overflow exception.");
+				return AskForNumbers();
+			}
 
-                Console.WriteLine("Here are the numbers from the server: ");
+			if(number == 0)
+				Running = false;
 
-                foreach (int x in numbers)
-                {
-                    Console.WriteLine(x);
-                }
-            }
-        }
+			if(number < 0)
+			{
+				Console.WriteLine("Greater than 0 please.");
+				return AskForNumbers();
+			}
 
-        private int GetNumber(String text)
-        {
-            Console.WriteLine(text);
-            return int.Parse(Console.ReadLine());
-        }
+			return number;
+		}
+
+		public void WriteNumbers(IEnumerable<int> numbers)
+		{
+			Console.WriteLine("Server returned numbers");
+			Parallel.ForEach(numbers, (number) => { Console.Write(number + " "); });
+			Console.Write("\n");
+		}
+
+		public async void GetNumbers(int amount, int min, int max, Action<IEnumerable<int>> callback)
+		{
+			var result = await mServer.GetNumbersAsync(amount, min, max);
+			callback(result);
+		}
+
+		private int GetNumber(String text)
+		{
+			Console.WriteLine(text);
+			return int.Parse(Console.ReadLine());
+		}
 
 
-    }
+	}
 }
