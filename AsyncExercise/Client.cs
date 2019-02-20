@@ -12,14 +12,27 @@ namespace AsyncExercise
 
         public void run()
         {
-            Console.WriteLine("Here are the numbers from the server: ");
-
-            int[] numbers = mServer.GetNumbers(20, 1, 5);
-
-            foreach (int x in numbers)
+            while (true)
             {
-                Console.WriteLine(x);
+                int number = GetNumber("Enter a number (0 for stop): ");
+
+                int[] numbers = mServer.GetNumbers(number, 1, 6);
+
+                Console.WriteLine("Here are the numbers from the server: ");
+
+                foreach (int x in numbers)
+                {
+                    Console.WriteLine(x);
+                }
             }
         }
+
+        private int GetNumber(String text)
+        {
+            Console.WriteLine(text);
+            return int.Parse(Console.ReadLine());
+        }
+
+
     }
 }
